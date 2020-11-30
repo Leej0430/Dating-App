@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".view.ProfileActivity">
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,4 +13,12 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     />
+
+    <Button
+        android:id="@+id/bt_logOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
