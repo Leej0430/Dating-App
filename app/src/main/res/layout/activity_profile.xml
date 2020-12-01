@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ProfileActivity">
+<<<<<<< HEAD
 <TextView
 
     android:layout_width="match_parent"
@@ -14,12 +15,66 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     />
+=======
+    <ImageButton
+        android:id="@+id/img_picture"
+        android:layout_width="279dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.629"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
+    <EditText
+        android:id="@+id/et_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_picture" />
+
+    <EditText
+        android:id="@+id/et_profile_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Sex"
+        android:editable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_profile_age" />
+>>>>>>> f038098753fcb6147a1ccfc4ce1a95b7fa416ac4
+
+    <EditText
+        android:id="@+id/et_profile_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Age"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_profile_name" />
+
+    <EditText
+        android:id="@+id/et_profile_bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Bio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_profile_sex" />
     <Button
+<<<<<<< HEAD
         android:id="@+id/btn_save_profile"
+=======
+        android:id="@+id/btn_profile_save"
+>>>>>>> f038098753fcb6147a1ccfc4ce1a95b7fa416ac4
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="Save"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_profile_bio"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
