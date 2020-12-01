@@ -16,38 +16,13 @@ import com.google.firebase.auth.FirebaseUser
 
 class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var btnLogOut: Button
-    private lateinit var logOutViewModel: LoginRegisterViewModel
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        btnLogOut = findViewById(R.id.bt_logOut)
-
-        logOutViewModel = ViewModelProviders.of(this).get(LoginRegisterViewModel::class.java)
-
-        logOutViewModel.logOutLiveData.observe(this, Observer<Boolean> { t ->
-            if (t ) {
-
-                val intent = Intent(baseContext, SignInActivity::class.java)
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
-
-            }
-        })
-        btnLogOut.setOnClickListener {
-            logOutViewModel.logout()
-
-
-        }
-    }
-
-
-    private fun selectCamera(){
-        var permission = ContextCompat.checkSelfPermission(this,
-            "Manifest.permission.CAMERA")
 
     }
 }

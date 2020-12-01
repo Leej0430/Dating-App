@@ -6,16 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".view.ProfileActivity">
 <TextView
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="ProfilePage"
+    android:text="This is the main Page"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     />
 
     <Button
-        android:id="@+id/bt_logOut"
+        android:id="@+id/btn_save_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button"

@@ -29,9 +29,6 @@ class RegisterationActivity : AppCompatActivity() {
     lateinit var authMainViewModel : LoginRegisterViewModel
     lateinit var sex : String
 
-
-
-
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +67,10 @@ class RegisterationActivity : AppCompatActivity() {
         btnRegister!!.setOnClickListener {
             if (etUsername.text.length > 0 &&
                 etEmail.text.length > 0 &&
-                etPassword.text.length > 0 ) {
+                etPassword.text.length > 0 )
+            {
+
+
                 authMainViewModel.register(
                     etUsername.text.toString(),
                     etEmail.text.toString(),

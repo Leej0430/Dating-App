@@ -49,7 +49,7 @@ class SignInActivity : AppCompatActivity() {
             override fun onChanged(t: FirebaseUser?) {
                 if (t != null) {
 
-                    val intent = Intent(baseContext, ProfileActivity::class.java)
+                    val intent = Intent(baseContext, MainActivity::class.java)
                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
 
