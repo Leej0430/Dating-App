@@ -97,6 +97,11 @@ class Repository {
     }
     fun UpdateUserInfos(name:String, email:String, password: String?, sex: String)
     {
+
+        //todo: The update function need to be done in the Repository and ViewModel
+        //todo : Make the update function is able to take : the name, img, sex, bio, and age
+
+
         val userId = mAuth.currentUser.toString()
         val currentUserDb = mDatabaseReference.reference.child(sex)
 

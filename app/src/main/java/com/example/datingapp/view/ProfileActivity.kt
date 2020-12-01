@@ -1,8 +1,4 @@
 package com.example.datingapp.view
-
-
-
-
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -19,8 +15,11 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.datingapp.R
 import com.example.datingapp.viewmodel.LoginRegisterViewModel
+import com.google.firebase.auth.FirebaseUser
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import java.io.File
@@ -33,12 +32,7 @@ class ProfileActivity : AppCompatActivity() {
     private val REQUEST_FROM_ALBUM=2
     lateinit var currentPhotoPath:String
 
-<<<<<<< HEAD
-
-
-=======
-    private lateinit var btnLogOut: Button
-    private lateinit var logOutViewModel: LoginRegisterViewModel
+    lateinit var authMainViewModel : LoginRegisterViewModel
     lateinit var imgPic: ImageButton
     lateinit var etName: EditText
     lateinit var etAge: EditText
@@ -46,7 +40,6 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var etBio: EditText
     lateinit var btnSave:Button
     lateinit var builder: AlertDialog.Builder
->>>>>>> f038098753fcb6147a1ccfc4ce1a95b7fa416ac4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +50,8 @@ class ProfileActivity : AppCompatActivity() {
         etSex = findViewById(R.id.et_profile_sex)
         etBio = findViewById(R.id.et_profile_bio)
         btnSave = findViewById(R.id.btn_profile_save)
+        authMainViewModel = ViewModelProviders.of(this).get(LoginRegisterViewModel::class.java)
+
 
 
         imgPic.setOnClickListener{
@@ -85,10 +80,21 @@ class ProfileActivity : AppCompatActivity() {
             val dialog = builder.create()
             dialog.show()
         }
+
+
+        authMainViewModel.userLiveData.observe(this, object : Observer<FirebaseUser> {
+            override fun onChanged(t: FirebaseUser?) {
+                if (t != null) {
+                    val intent = Intent(baseContext, MainActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        })
         btnSave.setOnClickListener {
 
-<<<<<<< HEAD
-=======
+            //todo: Check if the the input are not empty
+            //todo: Use the Viewmodel to update
+            //todo : Make the update function is able to take : the name, img, sex, bio, and age
         }
 
 
@@ -159,7 +165,6 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
     }
->>>>>>> f038098753fcb6147a1ccfc4ce1a95b7fa416ac4
 
     //this function for the showing image on the image view
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
