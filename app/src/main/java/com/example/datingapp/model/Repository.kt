@@ -47,7 +47,6 @@ class Repository {
                         val userId = mAuth.currentUser?.uid
                         val currentUserDbMale = mDatabaseReference.reference.child("users")
 
-
                             currentUserDbMale.child(sex.toString()).child(userId).child("sex").setValue(sex.toString())
                             currentUserDbMale.child(sex.toString()).child(userId).child("name").setValue(name)
                             currentUserDbMale.child(sex.toString()).child(userId).child("email").setValue(email)

@@ -52,8 +52,6 @@ class ProfileActivity : AppCompatActivity() {
         btnSave = findViewById(R.id.btn_profile_save)
         authMainViewModel = ViewModelProviders.of(this).get(LoginRegisterViewModel::class.java)
 
-
-
         imgPic.setOnClickListener{
             builder = AlertDialog.Builder(this)
             builder.setTitle("Select picture from")
@@ -81,20 +79,20 @@ class ProfileActivity : AppCompatActivity() {
             dialog.show()
         }
 
-
-        authMainViewModel.userLiveData.observe(this, object : Observer<FirebaseUser> {
-            override fun onChanged(t: FirebaseUser?) {
-                if (t != null) {
-                    val intent = Intent(baseContext, MainActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-        })
         btnSave.setOnClickListener {
-
             //todo: Check if the the input are not empty
             //todo: Use the Viewmodel to update
             //todo : Make the update function is able to take : the name, img, sex, bio, and age
+
+            authMainViewModel.userLiveData.observe(this, object : Observer<FirebaseUser> {
+                override fun onChanged(t: FirebaseUser?) {
+                    if (t != null) {
+                        val intent = Intent(baseContext, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            })
+
         }
 
 
