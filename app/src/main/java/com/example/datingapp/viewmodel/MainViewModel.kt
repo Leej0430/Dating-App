@@ -29,6 +29,9 @@ class LoginRegisterViewModel(application: Application) :
     fun logout(){
         authAppRepository.logOut()
     }
+    fun updateUserInfos(mgUr: String?, name: String?, sex: String?, age: String?, bio: String? ){
+        authAppRepository.UpdateUserInfos(mgUr, name, sex, age, bio)
+    }
 
 
 }
