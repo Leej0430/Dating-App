@@ -11,23 +11,21 @@ import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 
 class FragmentProfile: Fragment(){
-    lateinit var pageName:String
     lateinit var userImage:ImageView
-    lateinit var name:String
-    lateinit var age:String
-    lateinit var sex:String
-    lateinit var bio:String
+     var name:String=""
+     var age:String=""
+     var sex:String=""
+     var bio:String=""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
-        view.tv_name_fragment?.text = pageName
-        view.tv_user_name.text = name
-        view.tv_user_age.text = age
-        view.tv_user_sex.text = sex
-        view.tv_user_bio.text =bio
+        view.tv_user_name?.text = name
+        view.tv_user_age?.text = age
+        view.tv_user_sex?.text = sex
+        view.tv_user_bio?.text =bio
         return view
     }
 }

@@ -9,16 +9,20 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 
 class Repository {
 
-    private lateinit var application: Application
-    private lateinit var mAuth :FirebaseAuth
-    private lateinit var mDatabaseReference :FirebaseDatabase
-    private lateinit var users: MutableLiveData<FirebaseUser>
-    private lateinit var usersLoggedOut: MutableLiveData<Boolean>
+    private  var application: Application
+    private  var mAuth :FirebaseAuth
+    private  var mDatabaseReference :FirebaseDatabase
+    private  var users: MutableLiveData<FirebaseUser>
+    private  var usersLoggedOut: MutableLiveData<Boolean>
+    lateinit var currentUserDbMale: DatabaseReference
+    lateinit var userId:String
+
 
 
 
@@ -44,13 +48,14 @@ class Repository {
                 OnCompleteListener<AuthResult?> { task ->
                     if (task.isSuccessful)
                     {
-                        val userId = mAuth.currentUser?.uid
-                        val currentUserDbMale = mDatabaseReference.reference.child("users")
+                        userId = mAuth.currentUser?.uid!!
+                        currentUserDbMale= mDatabaseReference.reference.child("users")
 
-                            currentUserDbMale.child(sex.toString()).child(userId).child("sex").setValue(sex.toString())
-                            currentUserDbMale.child(sex.toString()).child(userId).child("name").setValue(name)
-                            currentUserDbMale.child(sex.toString()).child(userId).child("email").setValue(email)
-                            currentUserDbMale.child(sex.toString()).child(userId).child("password").setValue(password)
+
+                        currentUserDbMale.child(userId).child("sex").setValue(sex.toString())
+                        currentUserDbMale.child(userId).child("name").setValue(name)
+                        currentUserDbMale.child(userId).child("email").setValue(email)
+                        currentUserDbMale.child(userId).child("password").setValue(password)
 
                         users.postValue(mAuth.currentUser)
 
@@ -82,6 +87,12 @@ class Repository {
                     }
                 })
     }
+    fun getDatabase():FirebaseDatabase{
+        return mDatabaseReference
+    }
+    fun getAuth():FirebaseAuth{
+        return mAuth
+    }
     fun logOut() {
         mAuth.signOut()
         usersLoggedOut.postValue(true)
@@ -94,19 +105,20 @@ class Repository {
     fun getLoggedOutLiveData(): MutableLiveData<Boolean> {
         return usersLoggedOut
     }
-    fun UpdateUserInfos(name:String, email:String, password: String?, sex: String)
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun updateUserInfos(mgUr: String, name: String, sex: String, age: String, bio: String)
     {
 
-        //todo: The update function need to be done in the Repository and ViewModel
-        //todo : Make the update function is able to take : the name, img, sex, bio, and age
+        userId = mAuth.currentUser?.uid.toString()
 
+        currentUserDbMale.child(userId).child("image").setValue(mgUr)
+        currentUserDbMale.child(userId).child("name").setValue(name)
+        currentUserDbMale.child(userId).child("sex").setValue(sex)
+        currentUserDbMale.child(userId).child("age").setValue(age)
+        currentUserDbMale.child(userId).child("bio").setValue(bio)
 
-        val userId = mAuth.currentUser.toString()
-        val currentUserDb = mDatabaseReference.reference.child(sex)
+        users.postValue(mAuth.currentUser)
 
-        currentUserDb.child(userId).child("name").setValue(name)
-        currentUserDb.child(userId).child("email").setValue(email)
-        currentUserDb.child(userId).child("password").setValue(password)
     }
 
 

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -12,31 +13,51 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.datingapp.R
+import com.example.datingapp.R.layout.activity_main
+import com.example.datingapp.model.User
 import com.example.datingapp.viewmodel.LoginRegisterViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tab_button.view.*
 
-
+const val TAG ="MAIN_ACTIVITY"
 class MainActivity : AppCompatActivity() {
     private lateinit var logOutViewModel: LoginRegisterViewModel
     private lateinit var mContext :Context
-
+    private lateinit var user:User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(activity_main)
         logOutViewModel = ViewModelProviders.of(this).get(LoginRegisterViewModel::class.java)
-
-        //set the action bar
-        setSupportActionBar(tl_tl)
-
+        user = User()
         //set the viewPage
         mContext = applicationContext
-        initViewPager()
+
+
+        val auth = logOutViewModel.getAuth()
+        val database = logOutViewModel.getDatabase().getReference("users").child(auth.currentUser?.uid.toString())
+        database.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                    user.name=p0?.child("name")?.value.toString()
+                    user.sex=p0?.child("sex")?.value.toString()
+
+                initViewPager(user)
+            }
+
+        })
+        //set the action bar
+        setSupportActionBar(tl_tl)
 
         //logout observer
         logoutListener(logOutViewModel)
     }
-//for the button on action bar
+    //for the button on action bar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.setting,menu)
         return true
@@ -51,22 +72,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Show TabView for each tab
-private fun createTabView(tabName:String):View{
-    var tabView = LayoutInflater.from(mContext).inflate(R.layout.tab_button,null)
-    tabView.tab_text.text = tabName
-    when(tabName){
-        "Profile"-> return tabView
-        "Matching"-> return tabView
-        "Chatting"->return tabView
-        else-> return tabView
+    private fun createTabView(tabName:String):View{
+        var tabView = LayoutInflater.from(mContext).inflate(R.layout.tab_button,null)
+        tabView.tab_text.text = tabName
+        when(tabName){
+            "Profile"-> return tabView
+            "Matching"-> return tabView
+            "Chatting"->return tabView
+            else-> return tabView
+        }
+
     }
 
-}
-
     //initialize each viewPage
-    private fun initViewPager(){
+    private fun initViewPager(u:User){
         val profileFragment= FragmentProfile()
-        profileFragment.pageName = "Profile"
+        profileFragment.name = u.name
+        profileFragment.sex = u.sex
+        profileFragment.bio = "Profile"
+        profileFragment.age = "Profile"
         val matchingFragment = FragmentMatching()
         matchingFragment.name = "Matching"
         val chattingFragment = FragmentChatting()

@@ -64,7 +64,7 @@ class RegisterationActivity : AppCompatActivity() {
             }
         })
 
-        btnRegister!!.setOnClickListener {
+        btnRegister.setOnClickListener {
             if (etUsername.text.length > 0 &&
                 etEmail.text.length > 0 &&
                 etPassword.text.length > 0 )
