@@ -6,7 +6,8 @@ data class User(
     val email: String,
     val password: String,
     val sex : String,
-    val uid: String
+    val uid: String,
+    val imageUrl:String
 
 )
 

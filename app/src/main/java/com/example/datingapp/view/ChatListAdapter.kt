@@ -10,12 +10,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.datingapp.R
-import com.example.datingapp.model.ChatObject
+import com.example.datingapp.model.User
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 
-class ChatListAdapter(var chatList: ArrayList<ChatObject>, val btnlistener: BtnClickListener) :
+class ChatListAdapter(var chatList: ArrayList<User>, val btnlistener: BtnClickListener) :
     RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder>() {
 
     companion object{
@@ -45,8 +45,8 @@ class ChatListAdapter(var chatList: ArrayList<ChatObject>, val btnlistener: BtnC
         mClickListener = btnlistener
 
 
-        holder.mName.setText(chatList[position].chatName)
-        Picasso.get().load(chatList.get(position).image).into(holder.mImage)
+        holder.mName.setText(chatList[position].name)
+        Picasso.get().load(chatList.get(position).imageUrl).into(holder.mImage)
 
         holder.mLayout.setOnClickListener{
             View.OnClickListener { mClickListener?.onBtClick(position) }

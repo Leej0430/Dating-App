@@ -71,7 +71,7 @@ private fun createTabView(tabName:String):View{
         val matchingFragment = FragmentMatching()
         matchingFragment.name = "Matching"
         val chattingFragment = FragmentChatting()
-        chattingFragment.name = "Chatting"
+        //chattingFragment.name = "Chatting"
 
         val adapter = PageAdapter(supportFragmentManager)
         adapter.addPages(profileFragment)

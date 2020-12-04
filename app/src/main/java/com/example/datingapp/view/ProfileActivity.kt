@@ -91,7 +91,7 @@ class ProfileActivity : AppCompatActivity() {
             })
         btnSave.setOnClickListener {
 
-            authMainViewModel.updateUserInfos(imgPic.toString(), etName.text.toString(),
+            authMainViewModel.updateUserInfo(imgPic.toString(), etName.text.toString(),
             etSex.text.toString(), etAge.text.toString(), etBio.text.toString())
         }
 

@@ -11,12 +11,13 @@
         android:id="@+id/img_picture"
         android:layout_width="279dp"
         android:layout_height="190dp"
+        android:background="@drawable/ic_baseline_person_24"
         android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.629"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        />
 
     <EditText
         android:id="@+id/et_profile_name"

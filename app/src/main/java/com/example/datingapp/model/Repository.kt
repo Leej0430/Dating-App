@@ -1,7 +1,9 @@
 package com.example.datingapp.model
 
 import android.app.Application
+import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
@@ -9,32 +11,25 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 
-class Repository {
+class Repository(private var application: Application) {
 
-    private  var application: Application
-    private  var mAuth :FirebaseAuth
-    private  var mDatabaseReference :FirebaseDatabase
-    private  var users: MutableLiveData<FirebaseUser>
-    private  var usersLoggedOut: MutableLiveData<Boolean>
-    lateinit var currentUserDbMale: DatabaseReference
-    lateinit var userId:String
+    private  var mAuth :FirebaseAuth = FirebaseAuth.getInstance()
+    private  var mDatabaseReference :FirebaseDatabase = FirebaseDatabase.getInstance()
+    private  var users: MutableLiveData<FirebaseUser> = MutableLiveData()
+    private var userList: MutableLiveData<ArrayList<User>> = MutableLiveData()
+    private  var usersLoggedOut: MutableLiveData<Boolean> = MutableLiveData()
+    private val currentUserDbMale: DatabaseReference = mDatabaseReference.reference.child("users")
+
+    // private lateinit var currentUserDbMale: DatabaseReference
+    private  var userId:String? = mAuth.currentUser?.uid.toString()
 
 
-
-    constructor (application: Application)
-    {
-        this.application = application
-        mAuth = FirebaseAuth.getInstance()
-        mDatabaseReference = FirebaseDatabase.getInstance()
-        users = MutableLiveData()
-        usersLoggedOut = MutableLiveData()
-
-        if (mAuth.getCurrentUser() != null) {
-            users.postValue(mAuth.getCurrentUser());
+    init {
+        if (mAuth.currentUser != null) {
+            users.postValue(mAuth.currentUser);
             usersLoggedOut.postValue(false);
         }
     }
@@ -47,9 +42,8 @@ class Repository {
                 OnCompleteListener<AuthResult?> { task ->
                     if (task.isSuccessful)
                     {
-                        userId = mAuth.currentUser?.uid!!
-                        currentUserDbMale= mDatabaseReference.reference.child("users")
 
+                        //userId = mAuth.currentUser?.uid!!
 
                             currentUserDbMale.child(userId).child("sex").setValue(sex.toString())
                             currentUserDbMale.child(userId).child("name").setValue(name)
@@ -76,7 +70,7 @@ class Repository {
                 application.mainExecutor,
                 OnCompleteListener<AuthResult?> { task ->
                     if (task.isSuccessful) {
-                        users.postValue(mAuth.getCurrentUser())
+                        users.postValue(mAuth.currentUser)
                     } else {
                         Toast.makeText(
                             application.applicationContext,
@@ -98,12 +92,14 @@ class Repository {
     fun getLoggedOutLiveData(): MutableLiveData<Boolean> {
         return usersLoggedOut
     }
-    fun updateUserInfos(mgUr: String, name: String, sex: String, age: String, bio: String)
+    private  val TAG = "Repository"
+    fun updateUserInfo(imgUrl: String, name: String, sex: String, age: String, bio: String)
     {
 
-        userId = mAuth.currentUser.toString()
+        Log.d(TAG, "updateUserInfo: #### ${userId} #####")
+        //userId = mAuth.currentUser.toString()
 
-        currentUserDbMale.child(userId).child("image").setValue(mgUr)
+        currentUserDbMale.child(userId).child("image").setValue(Uri.parse(imgUrl).toString())
         currentUserDbMale.child(userId).child("name").setValue(name)
         currentUserDbMale.child(userId).child("sex").setValue(sex)
         currentUserDbMale.child(userId).child("age").setValue(age)
@@ -112,6 +108,29 @@ class Repository {
         users.postValue(mAuth.currentUser)
 
     }
+    fun getListOfUsers(): MutableLiveData<ArrayList<User>>
+    {
+        if (userList.value == null) {
+            FirebaseDatabase.getInstance()
+                .getReference("/users")
+                .addListenerForSingleValueEvent(object : ValueEventListener
+                {
+                    override fun onDataChange(dataSnapshot: DataSnapshot)
+                    {
+                        if (dataSnapshot.exists())
+                        {
 
+                            //userList.postValue(userList)
+                        }
+                    }
+
+                    override fun onCancelled(p0: DatabaseError?) {
+                    }
+
+                })
+        }
+        return userList
+
+    }
 
 }

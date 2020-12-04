@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.datingapp.model.Repository
+import com.example.datingapp.model.User
 import com.google.firebase.auth.FirebaseUser
 
 
@@ -29,8 +30,11 @@ class LoginRegisterViewModel(application: Application) :
     fun logout(){
         authAppRepository.logOut()
     }
-    fun updateUserInfos(mgUr: String?, name: String?, sex: String?, age: String?, bio: String? ){
-        authAppRepository.UpdateUserInfos(mgUr, name, sex, age, bio)
+    fun updateUserInfo(mgUr: String?, name: String?, sex: String?, age: String?, bio: String? ){
+        authAppRepository.updateUserInfo(mgUr!!, name!!, sex!!, age!!, bio!!)
+    }
+    fun getUsersList():MutableLiveData<ArrayList<User>>{
+        return authAppRepository.getListOfUsers()
     }
 
 
