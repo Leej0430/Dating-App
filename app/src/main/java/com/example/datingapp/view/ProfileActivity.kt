@@ -82,19 +82,17 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-        authMainViewModel.userLiveData.observe(this, object : Observer<FirebaseUser> {
-            override fun onChanged(t: FirebaseUser?) {
+        authMainViewModel.userLiveData.observe(this,
+            Observer<FirebaseUser> { t ->
                 if (t != null) {
                     //val intent = Intent(baseContext, MainActivity::class.java)
                     //startActivity(intent)
                 }
-            }
-        })
+            })
         btnSave.setOnClickListener {
 
             authMainViewModel.updateUserInfos(imgPic.toString(), etName.text.toString(),
-                etSex.text.toString(),  etAge.text.toString(), etBio.text.toString())
-
+            etSex.text.toString(), etAge.text.toString(), etBio.text.toString())
         }
 
 
