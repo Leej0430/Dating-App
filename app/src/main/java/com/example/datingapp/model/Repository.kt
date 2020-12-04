@@ -16,6 +16,8 @@ import com.google.firebase.database.*
 
 class Repository(private var application: Application) {
 
+
+
     private  var mAuth :FirebaseAuth = FirebaseAuth.getInstance()
     private  var mDatabaseReference :FirebaseDatabase = FirebaseDatabase.getInstance()
     private  var users: MutableLiveData<FirebaseUser> = MutableLiveData()
@@ -108,29 +110,11 @@ class Repository(private var application: Application) {
         users.postValue(mAuth.currentUser)
 
     }
-    fun getListOfUsers(): MutableLiveData<ArrayList<User>>
-    {
-        if (userList.value == null) {
-            FirebaseDatabase.getInstance()
-                .getReference("/users")
-                .addListenerForSingleValueEvent(object : ValueEventListener
-                {
-                    override fun onDataChange(dataSnapshot: DataSnapshot)
-                    {
-                        if (dataSnapshot.exists())
-                        {
-
-                            //userList.postValue(userList)
-                        }
-                    }
-
-                    override fun onCancelled(p0: DatabaseError?) {
-                    }
-
-                })
-        }
-        return userList
-
+    fun getDatabase():FirebaseDatabase{
+        return mDatabaseReference
+    }
+    fun getAuth():FirebaseAuth{
+        return mAuth
     }
 
 }

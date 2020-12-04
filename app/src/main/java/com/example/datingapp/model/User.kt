@@ -2,12 +2,11 @@ package com.example.datingapp.model
 
 data class User(
 
-    val name: String,
-    val email: String,
-    val password: String,
-    val sex : String,
-    val uid: String,
-    val imageUrl:String
+    var name: String="1",
+    var bio:String ="1",
+    var sex : String="1",
+    var age:String ="1",
+    val imageUrl:String ="1"
 
 )
 

@@ -7,7 +7,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.datingapp.model.Repository
 import com.example.datingapp.model.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 
 
 class LoginRegisterViewModel(application: Application) :
@@ -33,8 +35,11 @@ class LoginRegisterViewModel(application: Application) :
     fun updateUserInfo(mgUr: String?, name: String?, sex: String?, age: String?, bio: String? ){
         authAppRepository.updateUserInfo(mgUr!!, name!!, sex!!, age!!, bio!!)
     }
-    fun getUsersList():MutableLiveData<ArrayList<User>>{
-        return authAppRepository.getListOfUsers()
+    fun getDatabase(): FirebaseDatabase {
+        return authAppRepository.getDatabase()
+    }
+    fun getAuth(): FirebaseAuth {
+        return authAppRepository.getAuth()
     }
 
 

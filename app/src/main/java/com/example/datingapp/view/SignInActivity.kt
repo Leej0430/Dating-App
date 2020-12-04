@@ -45,8 +45,8 @@ class SignInActivity : AppCompatActivity() {
         loginViewModel = ViewModelProviders.of(this).get(LoginRegisterViewModel::class.java)
 
 
-        loginViewModel.userLiveData.observe(this, object : Observer<FirebaseUser> {
-            override fun onChanged(t: FirebaseUser?) {
+        loginViewModel.userLiveData.observe(this,
+            Observer<FirebaseUser> { t ->
                 if (t != null) {
 
                     val intent = Intent(baseContext, MainActivity::class.java)
@@ -54,10 +54,7 @@ class SignInActivity : AppCompatActivity() {
                     startActivity(intent)
 
                 }
-
-            }
-
-        })
+            })
 
         btnSignIn.setOnClickListener(View.OnClickListener {
 
