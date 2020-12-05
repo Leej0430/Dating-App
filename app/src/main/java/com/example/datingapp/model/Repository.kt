@@ -17,6 +17,7 @@ import com.google.firebase.database.*
 class Repository(private var application: Application) {
 
 
+    private lateinit var user:User
 
     private  var mAuth :FirebaseAuth = FirebaseAuth.getInstance()
     private  var mDatabaseReference :FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -24,6 +25,7 @@ class Repository(private var application: Application) {
     private var userList: MutableLiveData<ArrayList<User>> = MutableLiveData()
     private  var usersLoggedOut: MutableLiveData<Boolean> = MutableLiveData()
     private val currentUserDbMale: DatabaseReference = mDatabaseReference.reference.child("users")
+
 
     // private lateinit var currentUserDbMale: DatabaseReference
     private  var userId:String? = mAuth.currentUser?.uid.toString()
@@ -119,21 +121,23 @@ class Repository(private var application: Application) {
 
     fun getUser():User{
 
-
-        val user: User()
+        user = User()
         val database = mDatabaseReference.getReference("users").child(mAuth.currentUser?.uid.toString())
 
-        database.addValueEventListener(object:ValueEventListener{
+        database.addValueEventListener(object:ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
 
             }
 
             override fun onDataChange(p0: DataSnapshot?) {
-                user.name=p0?.child("name")?.value.toString()
-                user.sex=p0?.child("sex")?.value.toString()
+                user.name = p0?.child("name")?.value.toString()
+                user.sex = p0?.child("sex")?.value.toString()
+                user.imageUrl = p0?.child("image")?.value.toString()
 
-                initViewPager(user)
             }
+        })
+
+
             return user
     }
 

@@ -6,7 +6,7 @@ data class User(
     var bio:String ="1",
     var sex : String="1",
     var age:String ="1",
-    val imageUrl:String ="1"
+    var imageUrl:String ="1"
 
 )
 
