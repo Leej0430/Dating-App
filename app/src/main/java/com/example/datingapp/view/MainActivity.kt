@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity() {
 
 
         val auth = logOutViewModel.getAuth()
+
         val database = logOutViewModel.getDatabase().getReference("users").child(auth.currentUser?.uid.toString())
+
         database.addValueEventListener(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError?) {
 

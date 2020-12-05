@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.ProfileActivity">
 
-=======
+
     <ImageButton
         android:id="@+id/img_picture"
         android:layout_width="279dp"

@@ -93,6 +93,7 @@ class ProfileActivity : AppCompatActivity() {
 
             authMainViewModel.updateUserInfo(imgPic.toString(), etName.text.toString(),
             etSex.text.toString(), etAge.text.toString(), etBio.text.toString())
+
         }
 
 

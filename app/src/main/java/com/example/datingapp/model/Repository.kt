@@ -117,4 +117,24 @@ class Repository(private var application: Application) {
         return mAuth
     }
 
+    fun getUser():User{
+
+
+        val user: User()
+        val database = mDatabaseReference.getReference("users").child(mAuth.currentUser?.uid.toString())
+
+        database.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                user.name=p0?.child("name")?.value.toString()
+                user.sex=p0?.child("sex")?.value.toString()
+
+                initViewPager(user)
+            }
+            return user
+    }
+
 }
